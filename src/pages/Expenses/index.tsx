@@ -14,41 +14,11 @@ const Expenses = () => {
 
     return (
         <Layout pageName="Expenses">
-            <div className=" min-h-screen p-4">
+            <div className="p-4">
                 <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
 
-                    {/* Left - Transactions */}
-                    <div className="col-span-2 space-y-4">
-                        <div className="flex justify-between items-center">
-                            <h2 className="text-xl font-semibold">Expense History</h2>
-                            <button className="bg-black text-white px-4 py-2 rounded-full" onClick={() => { setIsOpenAddFrom(true) }}>Add Expense</button>
-                        </div>
-
-                        {transactions.map((section, i) => (
-                            <div key={i}>
-                                <p className="text-gray-500 text-sm mb-2">{section.date}</p>
-                                <div className="space-y-3">
-                                    {section.items.map((item, j) => (
-                                        <div key={j} className="flex items-center justify-between p-4 bg-white rounded-lg shadow">
-                                            <div className="flex items-center gap-3">
-                                                <span className="text-xl">{item.icon}</span>
-                                                <div>
-                                                    <p className={`font-medium ${item.type === "income" ? "text-green-600" : "text-black"}`}>
-                                                        {item.amount}
-                                                    </p>
-                                                    <p className="text-gray-500 text-sm">{item.label}</p>
-                                                </div>
-                                            </div>
-                                            <button className="text-gray-400">⋮</button>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-
                     {/* Right - Sidebar */}
-                    <div className="space-y-6 sticky top-4">
+                    <div className="space-y-6 top-4">
                         <div className="p-4">
                             <h2 className="text-lg font-semibold">Filter Expenses</h2>
                             <p className="text-sm text-gray-500">Filter expenses with a specific date range and category.</p>
@@ -88,6 +58,36 @@ const Expenses = () => {
                                 </button>
                             </div>
                         </div>
+                    </div>
+
+                    {/* Left - Transactions */}
+                    <div className="col-span-2 space-y-4">
+                        <div className="flex justify-between items-center">
+                            <h2 className="text-xl font-semibold">Expense History</h2>
+                            <button className="bg-black text-white px-4 py-2 rounded-full" onClick={() => { setIsOpenAddFrom(true) }}>Add Expense</button>
+                        </div>
+
+                        {transactions.map((section, i) => (
+                            <div key={i}>
+                                <p className="text-gray-500 text-sm mb-2">{section.date}</p>
+                                <div className="space-y-3">
+                                    {section.items.map((item, j) => (
+                                        <div key={j} className="flex items-center justify-between p-4 bg-white rounded-lg shadow">
+                                            <div className="flex items-center gap-3">
+                                                <span className="text-xl">{item.icon}</span>
+                                                <div>
+                                                    <p className={`font-medium ${item.type === "income" ? "text-green-600" : "text-black"}`}>
+                                                        {item.amount}
+                                                    </p>
+                                                    <p className="text-gray-500 text-sm">{item.label}</p>
+                                                </div>
+                                            </div>
+                                            <button className="text-gray-400">⋮</button>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
