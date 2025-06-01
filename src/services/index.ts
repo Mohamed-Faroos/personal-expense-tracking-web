@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { store } from '../state/store';
 
 const axiosClient = axios.create({
 	baseURL: 'http://localhost:3001', // Replace with your API base URL
@@ -7,11 +8,13 @@ const axiosClient = axios.create({
 // Request interceptor
 axiosClient.interceptors.request.use(
 	(config) => {
-
+		const token: string = store.getState().session.user?.accessToken || "";
+		if (config.headers && token) {
+			config.headers.set('Authorization', token);
+		}
 		return config;
 	},
 	(error) => {
-		// Handle request error
 		return Promise.reject(error);
 	}
 );
@@ -19,11 +22,9 @@ axiosClient.interceptors.request.use(
 // Response interceptor
 axiosClient.interceptors.response.use(
 	(response) => {
-		// Process response data
 		return response;
 	},
 	(error) => {
-		// Handle response error
 		return Promise.reject(error);
 	}
 );

@@ -33,7 +33,7 @@ export function* userSignUpSaga({ payload }: { payload: SignUpRequestType }) {
 
 	} catch (error) {
 		const axiosError = error as AxiosError;
-		const errorMessage = (axiosError?.response?.data as { errorMessage?: string })?.errorMessage || "An error occurred during login.";
+		const errorMessage = (axiosError?.response?.data as { errorMessage?: string })?.errorMessage || "An error occurred during sign up.";
 		yield put(userSignUpError(errorMessage));
 	}
 }
