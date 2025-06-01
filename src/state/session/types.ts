@@ -13,3 +13,4 @@ export interface SessionState {
 export const USER_LOGIN: string = 'USER_LOGIN';
 export const USER_LOGIN_SUCCESS: string = 'USER_LOGIN_SUCCESS';
 export const USER_LOGIN_ERROR: string = 'USER_LOGIN_ERROR';
+export const RESET_STATE: string = 'RESET_STATE';

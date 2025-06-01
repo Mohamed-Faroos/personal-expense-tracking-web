@@ -6,6 +6,7 @@ import storage from 'redux-persist/lib/storage';
 
 import rootReducer from './index'; // Assume you have a rootReducer combining all slices
 import rootSaga from './rootSaga'; // Assume you have a rootSaga combining all sagas
+import { RESET_STATE } from './session/types';
 
 const initialState: any = {};
 
@@ -27,7 +28,14 @@ const persistConfig = {
     storage,
 };
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+const rootReducerWithReset = (state: any, action: any) => {
+    if (action.type === RESET_STATE) {
+        state = undefined; // Clear all state
+    }
+    return rootReducer(state, action);
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducerWithReset);
 
 // Create the store with middleware and Redux DevTools
 const store = createStore(

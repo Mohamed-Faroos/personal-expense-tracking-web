@@ -4,16 +4,24 @@ import { MenuItems } from "../../lib/MenuItems";
 import HamburgerIcon from "../../assets/Icons/humbergur.svg";
 import CloseIcon from "../../assets/Icons/close.svg";
 import { useLocation } from "react-router-dom";
+import type { AppDispatch } from "../../state/store";
+import { useDispatch } from "react-redux";
+import { logout } from "../../state/session/userLogin";
 
 const Header = () => {
     const [menuOpen, setMenuOpen] = useState<boolean>(false);
-
     const location = useLocation();
+    const dispatch = useDispatch<AppDispatch>();
 
-    // Toggle menu visibility
     const toggleMenu = () => setMenuOpen(!menuOpen);
-
     const isCurrentUrl = (url: string) => location.pathname === url;
+
+    /**
+     * The `handleLogout` function dispatches a logout action.
+     */
+    const handleLogout = () => {
+        dispatch(logout());
+    };
 
     return (
         <header className="bg-gray-900 text-white p-4 sticky top-0 z-10">
@@ -34,6 +42,16 @@ const Header = () => {
                     <ul className="flex space-x-4">
                         {
                             MenuItems.map((item) => {
+                                if (item.isLogout) {
+                                    return (
+                                        <li>
+                                            <a onClick={handleLogout} className={"hover:bg-red-600 px-5 py-3 rounded-md cursor-pointer " + `${isCurrentUrl(item.link) ? " bg-red-500" : ""}`}>
+                                                {item.name}
+                                            </a>
+                                        </li>
+                                    )
+                                }
+
                                 return (
                                     <li>
                                         <a href={item.link} className={"hover:bg-gray-600 px-5 py-3 rounded-md " + `${isCurrentUrl(item.link) ? " bg-gray-500" : ""}`}>
@@ -55,14 +73,26 @@ const Header = () => {
                 >
                     <ul className="space-y-2">
                         {
-                            MenuItems.map((item) => (
-                                <li>
-                                    <a href={item.link}
-                                        className={"block hover:bg-gray-600 px-5 py-3 rounded-md " + `${isCurrentUrl(item.link) ? " bg-gray-500" : ""}`} >
-                                        {item.name}
-                                    </a>
-                                </li>
-                            ))
+                            MenuItems.map((item) => {
+                                if(item.isLogout) {
+                                    return (
+                                        <li>
+                                            <a onClick={handleLogout}
+                                                className={"block hover:bg-red-600 px-5 py-3 rounded-md cursor-pointer " + `${isCurrentUrl(item.link) ? " bg-red-500" : ""}`} >
+                                                {item.name}
+                                            </a>
+                                        </li>
+                                    )
+                                }
+                                return (
+                                    <li>
+                                        <a href={item.link}
+                                            className={"block hover:bg-gray-600 px-5 py-3 rounded-md " + `${isCurrentUrl(item.link) ? " bg-gray-500" : ""}`} >
+                                            {item.name}
+                                        </a>
+                                    </li>
+                                )
+                            })
                         }
                     </ul>
                 </div>
