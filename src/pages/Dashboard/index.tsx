@@ -7,14 +7,35 @@ const Dashboard = () => {
     ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
 
     const pieData1 = {
-        labels: ["Food", "Transport", "Entertainment"],
-        datasets: [
-            {
-                data: [300, 150, 100],
-                backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
-            },
+        "labels": [
+            "FOOD",
+            "TRAVELING",
+            "ENTERTAINMENT",
+            "OTHER",
+            "FITNESS",
+            "ROOM"
         ],
-    };
+        "datasets": [
+            {
+                "data": [
+                    950,
+                    4200,
+                    0,
+                    1100,
+                    2500,
+                    15000
+                ],
+                "backgroundColor": [
+                    "#FF6384",
+                    "#36A2EB",
+                    "#9966FF",
+                    "#FF9F40",
+                    "#FFCE56",
+                    "#4BC0C0"
+                ]
+            }
+        ]
+    }
 
     return (
         <Layout pageName="Dashboard">
