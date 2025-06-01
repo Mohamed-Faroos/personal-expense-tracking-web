@@ -14,11 +14,11 @@ const useExpenseAction = () => {
     const [form, setForm] = useState<{
         startDate: Date | null;
         endDate: Date | null;
-        category: string;
+        expenseType: string;
     }>({
         startDate: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
         endDate: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0),
-        category: ""
+        expenseType: ""
     });
 
     const expenseIcons = [
@@ -77,7 +77,7 @@ const useExpenseAction = () => {
         dispatch(getFilteredExpense({
             startDate: form.startDate,
             endDate: form.endDate,
-            category: form.category
+            expenseType: form.expenseType
         }));
     }
 

@@ -5,7 +5,7 @@ interface SelectInputProps {
     label: string;
     value: string | null;
     name?: string;
-    isRequired: boolean;
+    isRequired?: boolean;
     options?: ExpenseTypeResponse[];
     onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }

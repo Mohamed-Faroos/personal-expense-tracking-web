@@ -3,7 +3,7 @@ import axiosClient from '../index';
 export interface ExpenseFilterPayload {
     startDate: Date | null;
     endDate: Date | null;
-    category: string;
+    expenseType: string;
 };
 
 export const getExpenseStatsApi = async () => {
@@ -20,7 +20,7 @@ export const getExpenseFilterApi = async (payload:ExpenseFilterPayload) => {
     const response = await axiosClient.post('/expense/filter', {
         startDate: payload.startDate,
         endDate: payload.endDate,
-        category: payload.category
+        expenseType: payload.expenseType
     });
     return response;
 };

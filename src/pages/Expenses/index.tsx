@@ -95,7 +95,7 @@ const Expenses = () => {
                             />
                             <SelectInput
                                 label="Category"
-                                name="category"
+                                name="expenseType"
                                 value={null}
                                 options={stateExpenseTypes}
                                 onChange={onChange}
