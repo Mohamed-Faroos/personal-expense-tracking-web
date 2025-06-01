@@ -1,6 +1,6 @@
 import React from 'react';
 
-interface SuccessPopupProps {
+interface ErrorPopupProps {
     isOpen: boolean;
     title?: string;
     description?: string;
@@ -8,13 +8,13 @@ interface SuccessPopupProps {
     onButtonClick?: () => void;
 }
 
-const SuccessPopup: React.FC<SuccessPopupProps> = ({ isOpen = true, title, description, buttonLabel, onButtonClick }) => {
+const ErrorPopup: React.FC<ErrorPopupProps> = ({ isOpen = true, title, description, buttonLabel, onButtonClick }) => {
     if (!isOpen) return null;
 
     return (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
             <div className="bg-white rounded-lg shadow-lg p-6 max-w-sm w-full">
-                <h2 className="text-xl text-green-400 font-bold mb-4">{title}</h2>
+                <h2 className="text-xl text-red-400 font-bold mb-4">{title}</h2>
                 <p className="mb-6">{description}</p>
                 <button
                     onClick={onButtonClick}
@@ -27,4 +27,4 @@ const SuccessPopup: React.FC<SuccessPopupProps> = ({ isOpen = true, title, descr
     );
 };
 
-export default SuccessPopup;
+export default ErrorPopup;

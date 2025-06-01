@@ -24,7 +24,7 @@ const Header = () => {
     };
 
     return (
-        <header className="bg-gray-900 text-white p-4 sticky top-0 z-10">
+        <header className="bg-zinc-900 text-white p-4 sticky top-0 z-10">
             <div className="container mx-auto flex justify-between items-center">
                 {/* Logo */}
                 <h1 className="text-xl md:text-2xl font-bold ml-2">PET System</h1>
@@ -41,10 +41,10 @@ const Header = () => {
                 <nav className="hidden md:block">
                     <ul className="flex space-x-4">
                         {
-                            MenuItems.map((item) => {
+                            MenuItems.map((item, index) => {
                                 if (item.isLogout) {
                                     return (
-                                        <li>
+                                        <li key={index}>
                                             <a onClick={handleLogout} className={"hover:bg-red-600 px-5 py-3 rounded-md cursor-pointer " + `${isCurrentUrl(item.link) ? " bg-red-500" : ""}`}>
                                                 {item.name}
                                             </a>
@@ -53,7 +53,7 @@ const Header = () => {
                                 }
 
                                 return (
-                                    <li>
+                                    <li key={index}>
                                         <a href={item.link} className={"hover:bg-gray-600 px-5 py-3 rounded-md " + `${isCurrentUrl(item.link) ? " bg-gray-500" : ""}`}>
                                             {item.name}
                                         </a>
@@ -73,10 +73,10 @@ const Header = () => {
                 >
                     <ul className="space-y-2">
                         {
-                            MenuItems.map((item) => {
+                            MenuItems.map((item, index) => {
                                 if(item.isLogout) {
                                     return (
-                                        <li>
+                                        <li key={index}>
                                             <a onClick={handleLogout}
                                                 className={"block hover:bg-red-600 px-5 py-3 rounded-md cursor-pointer " + `${isCurrentUrl(item.link) ? " bg-red-500" : ""}`} >
                                                 {item.name}
@@ -85,7 +85,7 @@ const Header = () => {
                                     )
                                 }
                                 return (
-                                    <li>
+                                    <li key={index}>
                                         <a href={item.link}
                                             className={"block hover:bg-gray-600 px-5 py-3 rounded-md " + `${isCurrentUrl(item.link) ? " bg-gray-500" : ""}`} >
                                             {item.name}

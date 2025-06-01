@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { store } from '../state/store';
+import { setUnauthorizedFound } from '../state/session/userLogin';
 
 const axiosClient = axios.create({
 	baseURL: 'http://localhost:3001', // Replace with your API base URL
@@ -14,17 +15,22 @@ axiosClient.interceptors.request.use(
 		}
 		return config;
 	},
-	(error) => {
+	(error) => {		
 		return Promise.reject(error);
 	}
 );
 
 // Response interceptor
 axiosClient.interceptors.response.use(
-	(response) => {
+	(response) => {		
 		return response;
 	},
 	(error) => {
+		
+		if(error.status === 401) {
+			store.dispatch(setUnauthorizedFound())
+		}
+
 		return Promise.reject(error);
 	}
 );

@@ -8,7 +8,7 @@ export const MenuItems = [
         link:"/expense-management"
     },
     {
-        name:"Logout",
+        name:"Sign Out",
         link:"",
         isLogout: true
     }
