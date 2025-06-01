@@ -1,7 +1,7 @@
 import type React from "react";
 import { Navigate, Outlet } from "react-router-dom";
 
-const token = "";
+const token = "fsf";
 
 
 export const AuthRoute: React.FC = () => {
