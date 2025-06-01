@@ -1,7 +1,7 @@
 import { call, put } from "redux-saga/effects";
 import { RESET_STATE, USER_LOGIN, USER_LOGIN_ERROR, USER_LOGIN_SUCCESS } from "./types";
 import { loginApi } from "../../services/userService.ts";
-import type { LoginRequestType, LoginResponseType } from "../../lib/types/user.ts";
+import type { LoginRequestType, LoginResponseType } from "../../contants/types/user.ts";
 import type { AxiosError, AxiosResponse } from "axios";
 
 export const userLogin = (payload: LoginRequestType) => ({

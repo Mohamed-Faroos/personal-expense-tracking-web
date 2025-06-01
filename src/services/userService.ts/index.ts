@@ -1,4 +1,4 @@
-import type { LoginRequestType, SignUpRequestType } from '../../lib/types/user';
+import type { LoginRequestType, SignUpRequestType } from '../../contants/types/user';
 import axiosClient from '../index';
 
 export const loginApi = async (payload: LoginRequestType) => {

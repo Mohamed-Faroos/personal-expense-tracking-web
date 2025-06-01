@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import type { AppDispatch, RootState } from "../../state/store";
-import type { SignUpRequestType } from "../../lib/types/user";
+import type { SignUpRequestType } from "../../contants/types/user";
 import { userSignUp, userSignUpClear } from "../../state/signup/signUp";
 import type { SignUpState } from "../../state/signup/types";
 

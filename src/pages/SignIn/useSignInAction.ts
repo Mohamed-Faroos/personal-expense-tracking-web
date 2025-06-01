@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../../state/store";
 import { userLogin } from "../../state/session/userLogin";
-import type { LoginRequestType } from "../../lib/types/user";
+import type { LoginRequestType } from "../../contants/types/user";
 import { useState } from "react";
 import { validateEmail } from "../../lib";
 import type { SessionState } from "../../state/session/types";
