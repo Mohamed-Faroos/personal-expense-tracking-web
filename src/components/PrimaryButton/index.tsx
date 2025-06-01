@@ -9,7 +9,7 @@ const PrimaryButton: React.FC<PrimaryButtonProps> = ({ label, fullWidth, classNa
 
     return (
         <button
-            className={className + " py-2 bg-zinc-900 text-white font-semibold rounded-lg hover:bg-zinc-700 cursor-pointer transition" + (fullWidth ? " w-full" : "")}
+            className={className + " py-2 bg-zinc-900 text-white font-semibold rounded-lg hover:bg-zinc-700 cursor-pointer " + (fullWidth ? " w-full" : "")}
             {...props}
         >
             {label}

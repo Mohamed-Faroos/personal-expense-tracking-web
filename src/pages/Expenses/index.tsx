@@ -4,11 +4,13 @@ import CustomDatePicker from "../../components/DatePicker";
 import SelectInput from "../../components/SelectInput";
 import useExpenseAction from "./useExpenseAction";
 import PrimaryButton from "../../components/PrimaryButton";
+import EditExpenseModal from "./EditExpenseFromModal";
 
 const Expenses = () => {
 
-    const { stateExpenseTypes, stateFilteredExpense, stateFilterExpenseLoading, form, isOpenAddFrom, getIconByName,
-        setIsOpenAddFrom, onChange, onChangeStartDate, onChangeEndDate, onClickApplyFilters } = useExpenseAction()
+    const { stateExpenseTypes, stateFilteredExpense, stateFilterExpenseLoading, form, isOpenAddFrom, isOpenEditFrom, editingExpense,
+        setIsOpenEditFrom, getIconByName, setIsOpenAddFrom, onChange, onChangeStartDate, onChangeEndDate, onClickApplyFilters,
+        onClickEdit } = useExpenseAction()
 
     const renderExpenseList = () => {
         if (stateFilterExpenseLoading) {
@@ -49,7 +51,7 @@ const Expenses = () => {
                             <div className="flex gap-2">
                                 <button
                                     className="cursor-pointer text-white bg-zinc-800 px-4 py-2 rounded-md shadow-sm hover:bg-zinc-600"
-                                    onClick={() => console.log(`Edit expense: ${item._id}`)}
+                                    onClick={() => onClickEdit(item)}
                                 >
                                     Edit
                                 </button>
@@ -131,6 +133,11 @@ const Expenses = () => {
             <AddExpenseModal
                 isOpen={isOpenAddFrom}
                 onClose={() => setIsOpenAddFrom((prev) => !prev)}
+            />
+            <EditExpenseModal
+                isOpen={isOpenEditFrom}
+                onClose={() => setIsOpenEditFrom((prev) => !prev)}
+                expense={editingExpense}
             />
         </Layout>
     )

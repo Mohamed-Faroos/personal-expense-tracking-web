@@ -6,10 +6,11 @@ interface SelectInputProps {
     value: string | null;
     name?: string;
     isRequired?: boolean;
+    showDefault?: boolean;
     options?: ExpenseTypeResponse[];
     onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }
-const SelectInput: React.FC<SelectInputProps> = ({ label = "", value = null, name="", options, isRequired = false, onChange }) => {
+const SelectInput: React.FC<SelectInputProps> = ({ label = "", value = null, name = "", options, isRequired = false, showDefault = true, onChange }) => {
 
     return (
         <div className="mt-5">
@@ -23,7 +24,7 @@ const SelectInput: React.FC<SelectInputProps> = ({ label = "", value = null, nam
                 name={name}
                 defaultValue={value || ""}
             >
-                <option value="">All Category</option>
+                {showDefault && <option value="">All Category</option>}
                 {
                     options?.map((option) => (
                         <option key={option._id} value={option._id}>

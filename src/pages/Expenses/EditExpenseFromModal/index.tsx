@@ -3,20 +3,25 @@ import Modal from "react-modal";
 
 import TextInput from "../../../components/TextInput";
 import SelectInput from "../../../components/SelectInput";
-import useAddExpenseAction from "./useAddExpenseAction";
+import useEditExpenseAction from "./useEditExpenseAction";
 import CustomDatePicker from "../../../components/DatePicker";
 import PrimaryButton from "../../../components/PrimaryButton";
 import CloseIcon from "./../../../assets/Icons/close-black.svg"
+import type { ExpenseAddPayload } from "../../../services/expenseService.ts";
 
-interface AddExpenseModal {
-    isOpen: boolean
-    onClose?(): void
+export interface EditExpensePayload extends ExpenseAddPayload {
+    _id: string;
 }
 
-const AddExpenseModal: React.FC<AddExpenseModal> = ({ isOpen = false, onClose }) => {
+interface EditExpenseModal {
+    isOpen: boolean,
+    expense: EditExpensePayload,
+    onClose(): void
+}
 
-    const { stateExpenseTypes, stateExpenseAdded, stateExpenseAddLoading, form, error, onChange, onClickAddExpense, onChangeEventDate } = useAddExpenseAction();
+const EditExpenseModal: React.FC<EditExpenseModal> = ({ isOpen = false, onClose, expense }) => {
 
+    const { stateExpenseTypes, stateExpenseEdited, stateExpenseEditLoading, form, error, onChange, onClickAddExpense, onChangeEventDate } = useEditExpenseAction({ expense });
     return (
         <Modal
             isOpen={isOpen}
@@ -101,21 +106,21 @@ const AddExpenseModal: React.FC<AddExpenseModal> = ({ isOpen = false, onClose })
                     )
                 }
                 {
-                    stateExpenseAdded && (
+                    stateExpenseEdited && (
                         <div className="text-green-500 text-bold text-sm mt-2">
-                            Expense added successfully!
+                            Expense edited successfully!
                         </div>
                     )
                 }
                 <PrimaryButton
-                    label="Add Expense"
+                    label="Edit Expense"
                     onClick={onClickAddExpense}
                     fullWidth={true}
-                    disabled={stateExpenseAddLoading}
+                    disabled={stateExpenseEditLoading || stateExpenseEdited}
                 />
             </div>
         </Modal>
     );
 }
 
-export default AddExpenseModal;
+export default EditExpenseModal;
