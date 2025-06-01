@@ -1,16 +1,71 @@
-import { useState } from "react";
-import AddExpenseModal from "../../components/AddExpenseFromModal";
 import Layout from "../../components/Layout";
+import AddExpenseModal from "./AddExpenseFromModal";
+import CustomDatePicker from "../../components/DatePicker";
+import SelectInput from "../../components/SelectInput";
+import useExpenseAction from "./useExpenseAction";
+import PrimaryButton from "../../components/PrimaryButton";
 
 const Expenses = () => {
 
-    const [isOpenAddFrom, setIsOpenAddFrom] = useState<boolean>(false);
-    const transactions = [
-        { date: "Jan 1, 2024", items: [{ label: "Netflix", amount: "9.99 LKR", icon: "🎬", type: "expense" }, { label: "Pizza", amount: "25 LKR", icon: "🍕", type: "expense" }] },
-        { date: "Dec 30, 2023", items: [{ label: "Transfer", amount: "+25 LKR", icon: "💸", type: "income" }] },
-        { date: "Dec 26, 2023", items: [{ label: "Salary", amount: "+1224 LKR", icon: "💼", type: "income" }] },
-        { date: "Dec 25, 2023", items: [{ label: "Hotel room", amount: "140 LKR", icon: "🏨", type: "expense" }, { label: "Candies", amount: "28 LKR", icon: "🍬", type: "expense" }, { label: "Trip to Norway", amount: "684 LKR", icon: "🌍", type: "expense" }] },
-    ];
+    const { stateExpenseTypes, stateFilteredExpense, stateFilterExpenseLoading, form, isOpenAddFrom, getIconByName,
+        setIsOpenAddFrom, onChange, onChangeStartDate, onChangeEndDate, onClickApplyFilters } = useExpenseAction()
+
+    const renderExpenseList = () => {
+        if (stateFilterExpenseLoading) {
+            return (
+                <div className="flex  justify-center h-screen">
+                    <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-500"></div>
+                </div>
+            );
+        }
+
+        if (stateFilteredExpense.length === 0) {
+            return (
+                <div className="flex justify-center h-screen mt-30">
+                    <p className="text-gray-500 text-lg">No expenses found for the selected filters.</p>
+                </div>
+            );
+        }
+
+        return stateFilteredExpense.map((section, i) =>
+            <div key={i}>
+                <p className="text-gray-500 text-sm mb-2">{section.date}</p>
+                <div className="space-y-3">
+                    {section.expenses.map((item, j) => (
+                        <div key={j} className="flex items-center justify-between p-4 bg-white rounded-lg shadow">
+                            <div className="flex items-center gap-3">
+                                {
+                                    item?.expenseType?.label &&
+                                    <span className="text-xl">{getIconByName(item.expenseType.label)}</span>
+                                }
+                                <div>
+                                    <p className={`font-medium text-black`}>
+                                        {item.title}
+                                    </p>
+                                    <p className="text-gray-500 text-md">{item.amount.toLocaleString()} LKR</p>
+                                    <p className="text-gray-500 text-sm">{item.description}</p>
+                                </div>
+                            </div>
+                            <div className="flex gap-2">
+                                <button
+                                    className="cursor-pointer text-white bg-zinc-800 px-4 py-2 rounded-md shadow-sm hover:bg-zinc-600"
+                                    onClick={() => console.log(`Edit expense: ${item._id}`)}
+                                >
+                                    Edit
+                                </button>
+                                <button
+                                    className="cursor-pointer text-white bg-red-600 px-4 py-2 rounded-md shadow-sm hover:bg-red-500"
+                                    onClick={() => console.log(`Delete expense: ${item._id}`)}
+                                >
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        )
+    };
 
     return (
         <Layout pageName="Expenses">
@@ -26,74 +81,57 @@ const Expenses = () => {
 
                         {/* Filters */}
                         <div className="bg-white p-4 rounded-lg shadow">
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700">Start Date</label>
-                                <input
-                                    type="date"
-                                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-black focus:border-black sm:text-sm"
+                            <CustomDatePicker
+                                label="Start Date"
+                                value={form.startDate}
+                                isRequired={true}
+                                onChange={onChangeStartDate}
+                            />
+                            <CustomDatePicker
+                                label="End Date"
+                                value={form.endDate}
+                                isRequired={true}
+                                onChange={onChangeEndDate}
+                            />
+                            <SelectInput
+                                label="Category"
+                                name="category"
+                                value={null}
+                                options={stateExpenseTypes}
+                                onChange={onChange}
+                            />
+                            <div className="mt-5">
+                                <PrimaryButton
+                                    label="Apply Filters"
+                                    onClick={onClickApplyFilters}
+                                    fullWidth={true}
                                 />
-                            </div>
-                            <div className="mt-5">
-                                <label className="block text-sm font-medium text-gray-700">End Date</label>
-                                <input
-                                    type="date"
-                                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-black focus:border-black sm:text-sm"
-                                />
-                            </div>
-                            <div className="mt-5">
-                                <label className="block text-sm font-medium text-gray-700">Category</label>
-                                <select
-                                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-black focus:border-black sm:text-sm"
-                                >
-                                    <option value="">All Categories</option>
-                                    <option value="Food">Food</option>
-                                    <option value="Travel">Travel</option>
-                                    <option value="Clothes">Clothes</option>
-                                    <option value="Others">Others</option>
-                                </select>
-                            </div>
-                            <div className="mt-5">
-                                <button className="w-full bg-black text-white px-4 py-2 rounded-md shadow-sm hover:bg-gray-800">
-                                    Apply Filters
-                                </button>
                             </div>
                         </div>
                     </div>
 
                     {/* Left - Transactions */}
-                    <div className="col-span-2 space-y-4">
+                    <div className="col-span-2 space-y-4" >
                         <div className="flex justify-between items-center">
                             <h2 className="text-xl font-semibold">Expense History</h2>
-                            <button className="bg-black text-white px-4 py-2 rounded-full" onClick={() => { setIsOpenAddFrom(true) }}>Add Expense</button>
-                        </div>
+                            <PrimaryButton
+                                label="Add Expense"
+                                onClick={() => setIsOpenAddFrom(true)}
+                                fullWidth={false}
+                                className=" px-3 rounded "
+                            />
 
-                        {transactions.map((section, i) => (
-                            <div key={i}>
-                                <p className="text-gray-500 text-sm mb-2">{section.date}</p>
-                                <div className="space-y-3">
-                                    {section.items.map((item, j) => (
-                                        <div key={j} className="flex items-center justify-between p-4 bg-white rounded-lg shadow">
-                                            <div className="flex items-center gap-3">
-                                                <span className="text-xl">{item.icon}</span>
-                                                <div>
-                                                    <p className={`font-medium ${item.type === "income" ? "text-green-600" : "text-black"}`}>
-                                                        {item.amount}
-                                                    </p>
-                                                    <p className="text-gray-500 text-sm">{item.label}</p>
-                                                </div>
-                                            </div>
-                                            <button className="text-gray-400">⋮</button>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        ))}
+                        </div>
+                        <div className="col-span-2 space-y-4 px-4 mt-5" style={{ maxHeight: '500px', height: "auto", overflowY: 'auto' }}>
+                            {renderExpenseList()}
+                        </div>
                     </div>
                 </div>
             </div>
             <AddExpenseModal
                 isOpen={isOpenAddFrom}
-                onClose={() => setIsOpenAddFrom((prev) => !prev)} />
+                onClose={() => setIsOpenAddFrom((prev) => !prev)}
+            />
         </Layout>
     )
 };

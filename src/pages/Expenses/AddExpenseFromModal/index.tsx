@@ -1,4 +1,5 @@
 import React from "react";
+import CloseIcon from "./../../../assets/Icons/close-black.svg"
 
 interface AddExpenseModal {
     isOpen: boolean
@@ -14,10 +15,10 @@ const AddExpenseModal: React.FC<AddExpenseModal> = ({ isOpen = false, onClose })
             <div className="bg-white w-full max-w-md rounded-xl shadow-lg p-6 relative">
                 {/* Close Button */}
                 <button
-                    className="absolute top-3 right-3 text-gray-500 hover:text-black text-xl"
+                    className="absolute top-3 right-3 text-gray-500 hover:text-black text-xl cursor-pointer"
                     onClick={onClose}
                 >
-                    &times;
+                    <img src={CloseIcon} alt="Close" className="w-6 h-6" />
                 </button>
 
                 <h2 className="text-xl font-semibold mb-4">Add Transaction</h2>

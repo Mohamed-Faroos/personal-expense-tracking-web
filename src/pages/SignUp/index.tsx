@@ -18,6 +18,7 @@ const SignUp: React.FC = () => {
                         type="email"
                         placeholder="you@example.com"
                         name="email"
+                        isRequired={true}
                         value={formData.email}
                         onChange={onChangeInput}
                     />
@@ -26,6 +27,7 @@ const SignUp: React.FC = () => {
                         type="text"
                         placeholder="John"
                         name="fistName"
+                        isRequired={true}
                         value={formData.fistName}
                         onChange={onChangeInput}
                     />
@@ -34,6 +36,7 @@ const SignUp: React.FC = () => {
                         type="text"
                         placeholder="Peter"
                         name="lastName"
+                        isRequired={true}
                         value={formData.lastName}
                         onChange={onChangeInput}
                     />
@@ -42,6 +45,7 @@ const SignUp: React.FC = () => {
                         type="password"
                         placeholder="••••••••"
                         name="password"
+                        isRequired={true}
                         value={formData.password}
                         onChange={onChangeInput}
                     />
@@ -50,6 +54,7 @@ const SignUp: React.FC = () => {
                         type="password"
                         placeholder="••••••••"
                         name="confirmPassword"
+                        isRequired={true}
                         value={formData.confirmPassword}
                         onChange={onChangeInput}
                     />
