@@ -1,5 +1,5 @@
 import { call, put } from "redux-saga/effects";
-import { RESET_STATE, UNAUTHORIZED_ERROR_CLEAR, UNAUTHORIZED_ERROR_FOUND, USER_LOGIN, USER_LOGIN_ERROR, USER_LOGIN_SUCCESS } from "./types";
+import { RESET_STATE, UNAUTHORIZED_ERROR_CLEAR, UNAUTHORIZED_ERROR_FOUND, USER_LOGIN, USER_LOGIN_ERROR, USER_LOGIN_SUCCESS, type UserLoginAction } from "./types";
 import { loginApi } from "../../services/userService.ts";
 import type { LoginRequestType, LoginResponseType } from "../../contants/types/user.ts";
 import type { AxiosError, AxiosResponse } from "axios";
@@ -31,9 +31,9 @@ export const setUnauthorizedCLEAR = () => ({
 	type: UNAUTHORIZED_ERROR_CLEAR
 });
 
-export function* userLoginSaga({ payload }: { payload: LoginRequestType }) {
+export function* userLoginSaga(action: UserLoginAction) {
 	try {
-		const response: AxiosResponse = yield call(loginApi, payload);
+		const response: AxiosResponse = yield call(loginApi, action.payload);
 		if (response.status === 200) {
 			yield put(userLoginSuccess(response.data.data));
 		}

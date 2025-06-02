@@ -1,6 +1,6 @@
 import type { AxiosError, AxiosResponse } from "axios";
 import { call, delay, put } from "redux-saga/effects";
-import { EDIT_EXPENSE, EDIT_EXPENSE_CLEAR, EDIT_EXPENSE_ERROR, EDIT_EXPENSE_SUCCESS } from "./types.ts";
+import { EDIT_EXPENSE, EDIT_EXPENSE_CLEAR, EDIT_EXPENSE_ERROR, EDIT_EXPENSE_SUCCESS, type EditExpenseAction } from "./types.ts";
 import { editExpenseApi } from "../../services/expenseService.ts/index.ts";
 import type { EditExpensePayload } from "../../pages/Expenses/EditExpenseFromModal/index.tsx";
 
@@ -22,9 +22,9 @@ export const editExpenseClear = () => ({
     type: EDIT_EXPENSE_CLEAR
 });
 
-export function* editExpenseSaga({ payload }: { payload: EditExpensePayload }) {
+export function* editExpenseSaga(action: EditExpenseAction) {
     try {
-        const response: AxiosResponse = yield call(editExpenseApi, payload);
+        const response: AxiosResponse = yield call(editExpenseApi, action.payload);
         if (response.status === 200) {
             yield put(editExpenseSuccess());
             yield delay(1500);

@@ -1,6 +1,6 @@
 import type { AxiosError, AxiosResponse } from "axios";
 import { call, put } from "redux-saga/effects";
-import { GET_FILTER_EXPENSE, GET_FILTER_EXPENSE_ERROR, GET_FILTER_EXPENSE_SUCCESS, type FilterExpenseResponse } from "./types.ts";
+import { GET_FILTER_EXPENSE, GET_FILTER_EXPENSE_ERROR, GET_FILTER_EXPENSE_SUCCESS, type FilterExpenseResponse, type GetFilteredExpenseAction } from "./types.ts";
 import { getExpenseFilterApi, type ExpenseFilterPayload } from "../../services/expenseService.ts/index.ts";
 
 export const getFilteredExpense = (payload: ExpenseFilterPayload) => ({
@@ -18,9 +18,9 @@ export const getFilteredExpenseError = (error: string) => ({
     payload: error
 });
 
-export function* getFilteredExpenseSaga({ payload }: { payload: ExpenseFilterPayload }) {
+export function* getFilteredExpenseSaga(action: GetFilteredExpenseAction) {
     try {
-        const response: AxiosResponse = yield call(getExpenseFilterApi, payload);
+        const response: AxiosResponse = yield call(getExpenseFilterApi, action.payload);
         if (response.status === 200) {
             yield put(getFilteredExpenseSuccess(response.data.data));
         }
