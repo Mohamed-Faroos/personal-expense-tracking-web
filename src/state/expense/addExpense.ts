@@ -31,7 +31,7 @@ export function* addExpenseSaga({ payload }: { payload: ExpenseAddPayload }) {
         }
     } catch (error) {
         const axiosError = error as AxiosError;
-        const errorMessage = (axiosError?.response?.data as { errorMessage?: string })?.errorMessage || "An error occurred during getting stats.";
+        const errorMessage = (axiosError?.response?.data as { errorMessage?: string })?.errorMessage || "An error occurred during add expense.";
         yield put(addExpenseError(errorMessage));
     }
 }

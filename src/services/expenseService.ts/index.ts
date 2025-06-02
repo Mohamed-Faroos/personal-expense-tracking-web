@@ -15,6 +15,10 @@ export interface ExpenseAddPayload {
     date: Date | null;
 };
 
+export interface DeleteExpensePayload {
+    id: string;
+}
+
 export const getExpenseStatsApi = async () => {
     const response = await axiosClient.get('/expense/stats');
     return response;
@@ -53,5 +57,10 @@ export const editExpenseApi = async (payload: EditExpensePayload) => {
         expenseType: payload.expenseType,
         date: payload.date
     });
+    return response;
+};
+
+export const deleteExpenseApi = async (payload: DeleteExpensePayload) => {
+    const response = await axiosClient.delete('/expense/delete/' + payload.id);
     return response;
 };

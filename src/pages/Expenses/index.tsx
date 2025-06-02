@@ -5,12 +5,13 @@ import SelectInput from "../../components/SelectInput";
 import useExpenseAction from "./useExpenseAction";
 import PrimaryButton from "../../components/PrimaryButton";
 import EditExpenseModal from "./EditExpenseFromModal";
+import DeleteConfirmationModal from "./DeleteConfirmationModal";
 
 const Expenses = () => {
 
     const { stateExpenseTypes, stateFilteredExpense, stateFilterExpenseLoading, form, isOpenAddFrom, isOpenEditFrom, editingExpense,
-        setIsOpenEditFrom, getIconByName, setIsOpenAddFrom, onChange, onChangeStartDate, onChangeEndDate, onClickApplyFilters,
-        onClickEdit } = useExpenseAction()
+        deletingExpenseId, setIsOpenEditFrom, getIconByName, setIsOpenAddFrom, onChange, onChangeStartDate, onChangeEndDate, onClickApplyFilters,
+        onClickEdit, onClickDelete, onCancelDelete, onConfirmDelete } = useExpenseAction()
 
     const renderExpenseList = () => {
         if (stateFilterExpenseLoading) {
@@ -57,7 +58,7 @@ const Expenses = () => {
                                 </button>
                                 <button
                                     className="cursor-pointer text-white bg-red-600 px-4 py-2 rounded-md shadow-sm hover:bg-red-500"
-                                    onClick={() => console.log(`Delete expense: ${item._id}`)}
+                                    onClick={() => onClickDelete(item._id)}
                                 >
                                     Delete
                                 </button>
@@ -138,6 +139,11 @@ const Expenses = () => {
                 isOpen={isOpenEditFrom}
                 onClose={() => setIsOpenEditFrom((prev) => !prev)}
                 expense={editingExpense}
+            />
+            <DeleteConfirmationModal
+                isOpen={deletingExpenseId ? true : false}
+                onConfirm={onConfirmDelete}
+                onCancel={onCancelDelete}
             />
         </Layout>
     )

@@ -32,7 +32,7 @@ export function* editExpenseSaga({ payload }: { payload: EditExpensePayload }) {
         }
     } catch (error) {
         const axiosError = error as AxiosError;
-        const errorMessage = (axiosError?.response?.data as { errorMessage?: string })?.errorMessage || "An error occurred during getting stats.";
+        const errorMessage = (axiosError?.response?.data as { errorMessage?: string })?.errorMessage || "An error occurred during edit expense.";
         yield put(editExpenseError(errorMessage));
     }
 }

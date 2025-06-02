@@ -4,6 +4,8 @@ import type { AppDispatch, RootState } from "../../state/store";
 import type { ExpenseResponse, ExpenseTypeResponse, FilterExpenseResponse } from "../../state/expense/types";
 import { getFilteredExpense } from "../../state/expense/filterExpenseHistory";
 import type { EditExpensePayload } from "./EditExpenseFromModal";
+import { deleteExpense } from "../../state/expense/deleteExpense";
+import { getExpenseStats } from "../../state/expense/getExpenseStats";
 
 const useExpenseAction = () => {
     const stateExpenseTypes: ExpenseTypeResponse[] = useSelector((state: RootState) => state.expense.types || []);
@@ -11,6 +13,7 @@ const useExpenseAction = () => {
     const stateFilterExpenseLoading: boolean = useSelector((state: RootState) => state.expense.loading_filter || false);
     const stateExpenseAdded: boolean = useSelector((state: RootState) => state.expense.expense_added || false);
     const stateExpenseEdited: boolean = useSelector((state: RootState) => state.expense.expense_edited || false);
+    const stateExpenseDeleted: boolean = useSelector((state: RootState) => state.expense.expense_deleted || false);
 
     const [isOpenAddFrom, setIsOpenAddFrom] = useState<boolean>(false);
     const [isOpenEditFrom, setIsOpenEditFrom] = useState<boolean>(false);
@@ -23,8 +26,7 @@ const useExpenseAction = () => {
         endDate: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0),
         expenseType: ""
     });
-    const [editingExpense, setEditingExpense] = useState<EditExpensePayload>({
-
+    const [editingExpense, setEditingExpense] = useState<EditExpensePayload>({    
         _id: "",
         title: "",
         amount: "",
@@ -32,6 +34,8 @@ const useExpenseAction = () => {
         expenseType: "",
         date: new Date() as Date | null,
     });
+    const [deletingExpenseId, setDeletingExpenseId] = useState<string>("");
+
 
     const expenseIcons = [
         { name: "FOOD", icon: "🍔" },
@@ -54,7 +58,7 @@ const useExpenseAction = () => {
 
     /* load added data successfull message */
     useEffect(() => {
-        if (stateExpenseAdded || stateExpenseEdited) {
+        if (stateExpenseAdded || stateExpenseEdited || stateExpenseDeleted) {
             setForm({
                 startDate: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
                 endDate: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0),
@@ -65,8 +69,9 @@ const useExpenseAction = () => {
                 endDate: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0),
                 expenseType: ""
             }));
+            dispatch(getExpenseStats());
         }
-    }, [stateExpenseAdded, stateExpenseEdited])
+    }, [stateExpenseAdded, stateExpenseEdited, stateExpenseDeleted])
 
     /**
      * The onChange function updates the form state with the new value based on the input element's
@@ -126,9 +131,25 @@ const useExpenseAction = () => {
         setIsOpenEditFrom(true);
     };
 
+    const onClickDelete = (id:string) => {
+        setDeletingExpenseId(id);
+    };
+
+    const onCancelDelete = () => {
+        setDeletingExpenseId("");
+    };
+
+    const onConfirmDelete = () => {
+        if (deletingExpenseId) {
+            dispatch(deleteExpense({ id: deletingExpenseId }));
+            setDeletingExpenseId("");
+        }
+    };
+
     return {
-        stateExpenseTypes, stateFilterExpenseLoading, stateFilteredExpense, form, isOpenAddFrom, isOpenEditFrom, editingExpense,
-        setIsOpenEditFrom, getIconByName, setIsOpenAddFrom, onChange, onChangeStartDate, onChangeEndDate, onClickApplyFilters, onClickEdit
+        stateExpenseTypes, stateFilterExpenseLoading, stateFilteredExpense, form, isOpenAddFrom, isOpenEditFrom, editingExpense, deletingExpenseId,
+        setIsOpenEditFrom, getIconByName, setIsOpenAddFrom, onChange, onChangeStartDate, onChangeEndDate, onClickApplyFilters, onClickEdit,
+        onClickDelete, onCancelDelete, onConfirmDelete
     };
 }
 

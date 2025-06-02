@@ -3,7 +3,7 @@ import { store } from '../state/store';
 import { setUnauthorizedFound } from '../state/session/userLogin';
 
 const axiosClient = axios.create({
-	baseURL: 'http://localhost:3001', // Replace with your API base URL
+	baseURL: 'https://personal-expense-tracking-api.vercel.app', // Replace with your API base URL
 });
 
 // Request interceptor

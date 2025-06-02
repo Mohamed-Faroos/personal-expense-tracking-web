@@ -54,6 +54,9 @@ export interface ExpenseState {
     expense_edited: boolean,
 	edit_expense_loading: boolean,
 	edit_expense_error: string | null;
+    expense_deleted: boolean,
+	delete_expense_loading: boolean,
+	delete_expense_error: string | null;
 }
 
 export const GET_EXPENSE_STATS: string = 'GET_EXPENSE_STATS';
