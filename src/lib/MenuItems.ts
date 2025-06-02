@@ -6,5 +6,10 @@ export const MenuItems = [
     {
         name:"Manage Expenses",
         link:"/expense-management"
+    },
+    {
+        name:"Sign Out",
+        link:"",
+        isLogout: true
     }
 ]
