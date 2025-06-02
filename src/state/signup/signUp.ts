@@ -1,7 +1,7 @@
 import { call, put } from "redux-saga/effects";
 import type { AxiosError, AxiosResponse } from "axios";
 
-import { USER_SIGN_UP, USER_SIGN_UP_CLEAR, USER_SIGN_UP_ERROR, USER_SIGN_UP_SUCCESS } from "./types.ts";
+import { USER_SIGN_UP, USER_SIGN_UP_CLEAR, USER_SIGN_UP_ERROR, USER_SIGN_UP_SUCCESS, type UserSignupAction } from "./types.ts";
 import { registerApi } from "../../services/userService.ts/index.ts";
 import type { SignUpRequestType, SignUpResponseType } from "../../contants/types/user.ts";
 
@@ -24,9 +24,9 @@ export const userSignUpClear = () => ({
 	type: USER_SIGN_UP_CLEAR,
 });
 
-export function* userSignUpSaga({ payload }: { payload: SignUpRequestType }) {
+export function* userSignUpSaga(action: UserSignupAction) {
 	try {
-		const response: AxiosResponse = yield call(registerApi, payload);
+		const response: AxiosResponse = yield call(registerApi, action.payload);
 		if (response.status === 201) {
 			yield put(userSignUpSuccess(response.data.data));
 		}

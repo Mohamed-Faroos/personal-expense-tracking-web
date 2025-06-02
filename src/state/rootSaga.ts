@@ -1,6 +1,6 @@
 import { takeLatest } from 'redux-saga/effects';
 
-import { USER_LOGIN } from './session/types';
+import { USER_LOGIN } from './session/types'; 
 import { userLoginSaga } from './session/userLogin';
 
 import { USER_SIGN_UP } from './signup/types';
@@ -15,7 +15,7 @@ import { editExpenseSaga } from './expense/editExpense';
 import { deleteExpenseSaga } from './expense/deleteExpense';
 
 function* rootSaga() {
-    yield takeLatest(USER_LOGIN, userLoginSaga);
+    yield takeLatest(USER_LOGIN , userLoginSaga);
     yield takeLatest(USER_SIGN_UP, userSignUpSaga);
     yield takeLatest(GET_EXPENSE_STATS, getExpenseStatsSaga);
     yield takeLatest(GET_EXPENSE_TYPES, getExpenseTypesSaga);
