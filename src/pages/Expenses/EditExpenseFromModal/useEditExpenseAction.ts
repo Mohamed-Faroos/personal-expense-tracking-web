@@ -43,14 +43,6 @@ const useEditExpenseAction = ({ expense }: { expense?: EditExpensePayload }) => 
      */
     useEffect(() => {
         if (stateExpenseEdited) {
-            setForm({
-                _id: "",
-                title: "",
-                amount: "",
-                description: "",
-                expenseType: stateExpenseTypes[0]._id || "",
-                date: new Date() as Date | null,
-            });
             setError(null);
         }
     }, [stateExpenseEditLoading]);

@@ -25,6 +25,16 @@ const Layout: React.FC<LayoutProps> = ({ children, pageName = "" }) => {
     };
 
     const renderWarnings = () => {
+        if (currentMonthTotal > MonthlyExpenseLimit) {
+            return (
+                <div className="bg-red-200 text-red-800 p-4 rounded mb-6">
+                    <p className="text-sm font-medium">
+                        Alert: You have exceeded your monthly expense limit!
+                    </p>
+                </div>
+            );
+        }
+
         if (currentMonthTotal >= 0.9 * MonthlyExpenseLimit) {
             return (
                 <div className="bg-yellow-200 text-yellow-800 p-4 rounded mb-6">
@@ -36,7 +46,7 @@ const Layout: React.FC<LayoutProps> = ({ children, pageName = "" }) => {
         }
         return null;
     }
-    
+
     return (
         <div className="flex flex-col min-h-screen">
             {/* Header Section */}
